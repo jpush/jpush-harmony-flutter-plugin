@@ -67,7 +67,7 @@
     ],
     "proxyData": [
       {
-        "uri": "datashareproxy://cn.allpublic.test.hmos/PushMessage",
+        "uri": "datashareproxy://你的包名/PushMessage",
         "requiredWritePermission": "ohos.permission.WRITE_PRIVACY_PUSH_DATA",
         "metadata": {
           "name": "dataProperties",
