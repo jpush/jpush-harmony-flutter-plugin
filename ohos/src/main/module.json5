@@ -1,0 +1,10 @@
+{
+  "module": {
+    "name": "jpush_harmony_sdk",
+    "type": "har",
+    "deviceTypes": [
+      "default",
+      "tablet"
+    ]
+  }
+}
