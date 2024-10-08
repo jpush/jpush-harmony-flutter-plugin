@@ -1,3 +1,4 @@
+如何不想配置太多环境，最好，在DevEco Studio 的Terminal上打命令
 
 编译：flutter build hap --debug
 
