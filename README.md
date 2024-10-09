@@ -15,9 +15,6 @@ dependencies:
       url: git://github.com/jpush/jpush-harmony-flutter-plugin.git
       ref: main
       
-// pub 集成
-dependencies:
-  jpush_harmony_sdk: 1.0.0
 ```
 
 - 代码导入：可以参考example里的代码
