@@ -16,37 +16,117 @@ final _jpushHarmonySdkPlugin = JpushHarmonySdk();
 集成了 sdk 回调的事件
 
 #### 参数说明
-- eventName:反回的事件数据
-  - message["event_name"]: 为事件类型
-    - android:
-      - "onNotificationStatus":应用通知开关状态回调,内容类型为boolean，true为打开，false为关闭
-      - "onConnectStatus":长连接状态回调,内容类型为boolean，true为连接
-      - "onNotificationArrived":通知消息到达回调，内容为通知消息体
-      - "onNotificationClicked":通知消息点击回调，内容为通知消息体
-      - "onNotificationDeleted":通知消息删除回调，内容为通知消息体
-      - "onCustomMessage":自定义消息回调，内容为通知消息体
-      - "onPlatformToken":厂商token消息回调，内容为厂商token消息体
-      - "onTagMessage":tag操作回调
-      - "onAliasMessage":alias操作回调
-      - "onNotificationUnShow":在前台，通知消息不显示回调（后台下发的通知是前台信息时）
-    - ios:
-      - "willPresentNotification":通知消息到达回调，内容为通知消息体
-      - "didReceiveNotificationResponse":通知消息点击回调，内容为通知消息体
-      - "networkDidReceiveMessage":自定义消息回调，内容为通知消息体
-      - "networkDidLogin":登陆成功
-      - "checkNotificationAuthorization":检测通知权限授权情况
-      - "addTags":添加tag回调
-      - "setTags":设置tag回调
-      - "deleteTags":删除tag回调
-      - "cleanTags":清除tag回调
-      - "getAllTags":获取tag回调
-      - "validTag":校验tag回调
-      - "setAlias":设置Alias回调
-      - "deleteAlias":删除Alias回调
-      - "getAlias":获取Alias回调
-      - "deleteAlias":删除Alias回调
-  - message["event_data"]: 为对应内容
-
+  - eventName: 为事件类型
+      - "onRegister":注册成功，内容类型为string，反回rid
+      - "onConnected":长连接状态回调,内容类型为boolean，true为连接
+      - "onTagOperatorResult":tag操作结果回调，内容为string JTagMessage json
+      - "onAliasOperatorResult":Alias操作结果回调，内容为string JAliasMessage json
+      - "onClickMessage":通知点击事件回调，内容为string JMessage json
+      - "onCustomMessage":自定义消息回调，内容为string JCustomMessage json
+      - "onJMessageExtra":通知扩展消息回调，内容为string JMessageExtra json
+      - "onJMessageVoIP":通知扩展消息回调，内容为string JMessageVoIP json
+      - "onCommandResult":交互事件回调，内容为string JCmdMessage json
+  - data: 为对应内容
+```
+/**
+* 操作 tag 接口回调
+* @param jTagMessage
+* export class JTagMessage {
+* sequence?: number //对应操作id，全局不要重复
+* code?: number //0成功，JTagMessage.CODE_TIME_OUT超时
+* op?: string
+* tags?: string[] //对应数据
+* curr?: number //数据当前页数，页数从1开始
+* total?: number //数据总页数
+* msg?: string
+* }
+  */
+```
+```
+/**
+* 操作 Alias 接口回调
+* @param jAliasMessage
+* export class JAliasMessage {
+* sequence?: number //对应操作id，全局不要重复
+* code?: number //0成功，JAliasMessage.CODE_TIME_OUT超时
+* op?: string
+* alias?: string //对应数据
+* curr?: number
+* total?: number
+* msg?: string
+* }
+  */
+```
+```
+  /**
+   * 通知点击事件回调
+   * @param jMessage
+   *
+   * export class JMessage {
+   * msgId?: string //通知id
+   * title?: string //通知标题
+   * content?: string//通知内容
+   * extras?: string//自定义数据
+   * }
+   */
+```
+```
+  /**
+   * 自定义信息通知回调
+   *  回调一：冷启动调用sdk初始化后回调之前还没有回调的信息
+   *  回调二：app存活时会直接回调信息
+   * @param jCustomMessage
+   *
+   * export class JCustomMessage {
+   *  msgId?: string //通知id
+   *  title?: string //通知标题
+   *  content?: string //通知内容
+   *  contentType?: string //通知内容类型
+   *  extras?: Record<string, Object> //通知自定义键值对
+   *  ttl?: number //后台下发的信息过期时间，单位秒
+   *  stime?: number //后台下发时间，毫秒
+   * }
+   */
+```
+```
+  /**
+   * 通知扩展消息回调
+   * @param jMessageExtra
+   *
+   * export class JMessageExtra {
+   * msgId?: string //通知id
+   * title?: string //通知标题
+   * content?: string//通知内容
+   * extras?: Record<string, Object>//自定义数据
+   * extraData?: string//通知扩展消息的自定义数据
+   * }
+   */
+```
+```
+/**
+   * VoIP呼叫消息回调
+   * export class JMessageVoIP {
+   * msgId?: string //通知id
+   * extraData?: string //VoIP自定义数据
+   }
+   * @param jmVoIP
+   */
+```
+```
+  /**
+   * 交互事件回调
+   * @param cmdMessage
+   * export class JCmdMessage {
+   * public static CMD_PUSH_STOP = 2007 //通知停止 设置回调
+   * public static CMD_PUSH_RESUME = 2006 //  通知恢复 设置回调
+   *
+   * cmd?: number  //操作事件，2007通知停止，2006恢复通知
+   * errorCode?: number //0表示成功，其他为错误
+   * msg?: string //内容信息
+   * extra?: Record<string, Object>
+   * }
+   */
+```
 
 #### 代码示例
 
