@@ -49,69 +49,9 @@ final _jpushHarmonySdkPlugin = JpushHarmonySdk();
 想要推送功能，需要配置 HarmonyOS 平台信息
 
 主要步骤为：
-
-- 在 hmos 平台获取到应用 client_id
-  > [文档查看获取client_id部分](https://docs.jiguang.cn/jpush/client/HarmonyOS/hmos_guide)
-  
-
 - 在hmos平台开通推送服务
-- 在本地工程配置应用 client_id
-  > 说明：
-  >
-  > 本地工程配置应用 client_id，需在 entry 模块下的 module.json5 文件添加
-  ```
-  "module": {
-      "metadata": [
-          {
-              "name": "client_id",
-              "value": "你的华为应用client_id"
-          }
-      ]
-  }
-  ```
 - 配置签署
   > [文档查看配置签署部分](https://docs.jiguang.cn/jpush/client/HarmonyOS/hmos_guide)
-
-
-#### 配置极光平台信息
-
-上述步骤完成后，还需要配置极光平台信息
-
-主要步骤为：
-
-- 在极光平台创建应用，并确保如下两个信息：包名和 appKey，与极光平台一致。
-> 说明1：
->
-> 在本地工程配置包名，方式：在 AppScope 工程下的 app.json5 文件添加
-```
-{
-  "app": {
-    "bundleName": "你的包名",
-  }
-}
-```
-> 说明2：
->
-> 在本地工程配置极光appKey（极光控制台创建应用后自动生成的应用标识），代码配置 如：
-```
- _jpushHarmonySdkPlugin.setAppKey("你的appKey")   //在init之前调用
-```
-> 说明3：
->
-> 在本地工程配置接收回调信息， 代码配置 如：
-```
-_jpushHarmonySdkPlugin.setCallBack((eventName, data) async {
-        print("flutter_log_MyApp:eventName:$eventName");
-        print("flutter_log_MyApp:data:$data");
-        setState(() {
-          print("flutter_log_MyApp:setState");
-          _platformVersion += "\n$eventName:$data";
-          if(eventName == "onRegister"){
-            _RID = data;
-          }
-        });
-      });
-```
 
 #### 配置通知跳转页
 
@@ -425,6 +365,47 @@ export default class PushMessageAbility extends UIAbility {
 
 - actions：内容为action.ohos.push.listener，有且只能有一个ability定义该action，若同时添加uris参数，则uris内容需为空。
 
+
+
+#### 设置极光平台信息
+
+上述步骤完成后，还需要配置极光平台信息
+
+主要步骤为：
+
+- 在极光平台创建应用，并确保如下两个信息：包名和 appKey，与极光平台一致。
+> 说明1：
+>
+> 在本地工程配置包名，方式：在 AppScope 工程下的 app.json5 文件添加
+```
+{
+  "app": {
+    "bundleName": "你的包名",
+  }
+}
+```
+> 说明2：
+>
+> 在本地工程配置极光appKey（极光控制台创建应用后自动生成的应用标识），代码配置 如：
+```
+ _jpushHarmonySdkPlugin.setAppKey("你的appKey")   //在init之前调用
+```
+> 说明3：
+>
+> 在本地工程配置接收回调信息， 代码配置 如：
+```
+_jpushHarmonySdkPlugin.setCallBack((eventName, data) async {
+        print("flutter_log_MyApp:eventName:$eventName");
+        print("flutter_log_MyApp:data:$data");
+        setState(() {
+          print("flutter_log_MyApp:setState");
+          _platformVersion += "\n$eventName:$data";
+          if(eventName == "onRegister"){
+            _RID = data;
+          }
+        });
+      });
+```
 
 #### 启用推送业务功能
 
