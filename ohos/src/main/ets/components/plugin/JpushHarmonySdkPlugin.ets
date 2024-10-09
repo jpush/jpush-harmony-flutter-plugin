@@ -31,7 +31,7 @@ import { FlutterConfig } from './config/FlutterConfig';
 export default class JpushHarmonySdkPlugin implements FlutterPlugin, MethodCallHandler {
   private static plugin: JpushHarmonySdkPlugin | null = null;
   private channel: MethodChannel | null = null;
-  private applicationContext: common.ApplicationContext | null = null;
+  private applicationContext: common.Context | null = null;
   private static TAG_STATIC: string = "JpushHarmonySdkPlugin"
   private TAG: string = JpushHarmonySdkPlugin.TAG_STATIC
 
@@ -43,7 +43,7 @@ export default class JpushHarmonySdkPlugin implements FlutterPlugin, MethodCallH
   }
 
   onAttachedToEngine(binding: FlutterPluginBinding): void {
-    this.applicationContext = binding.getApplicationContext().getApplicationContext()
+    this.applicationContext = binding.getApplicationContext()
     JPushInterfaceImp.setApplicationContext(this.applicationContext)
     this.channel = new MethodChannel(binding.getBinaryMessenger(), "jpush_harmony_sdk");
     this.channel.setMethodCallHandler(this)
@@ -141,7 +141,7 @@ export default class JpushHarmonySdkPlugin implements FlutterPlugin, MethodCallH
 
   static async receiveExtraDataMessage(rNEAbility: RemoteNotificationExtensionAbility,
     remoteNotificationInfo: pushCommon.RemoteNotificationInfo) {
-    return await JPushInterface.receiveExtraDataMessage(remoteNotificationInfo)
+    return await JPushInterface.receiveExtraDataMessage(rNEAbility,remoteNotificationInfo)
   }
 
   static receiveMessageAll(ability: Ability) {
@@ -187,7 +187,7 @@ export default class JpushHarmonySdkPlugin implements FlutterPlugin, MethodCallH
 class JPushInterfaceImp {
   TAG: string = "JPushInterfaceImp"
   private static instance: JPushInterfaceImp;
-  private static applicationContext: common.ApplicationContext;
+  private static applicationContext: common.Context;
 
   public static getInstance(): JPushInterfaceImp {
     if (!JPushInterfaceImp.instance) {
@@ -196,7 +196,7 @@ class JPushInterfaceImp {
     return JPushInterfaceImp.instance;
   }
 
-  static setApplicationContext(applicationContext: common.ApplicationContext) {
+  static setApplicationContext(applicationContext: common.Context) {
     JPushInterfaceImp.applicationContext = applicationContext;
   }
 
@@ -273,8 +273,12 @@ class JPushInterfaceImp {
     }
   }
 
-  init(uiContext: common.ApplicationContext) {
-    JPushInterface.init(uiContext)
+  init(uiContext: common.Context) {
+   let uIAbilityContext =  FlutterManager.getInstance().getUIAbility()?.context
+    if (undefined == uIAbilityContext) {
+      uIAbilityContext = uiContext as common.UIAbilityContext
+    }
+    JPushInterface.init(uIAbilityContext)
   }
 
   getRegistrationId(result: MethodResult) {

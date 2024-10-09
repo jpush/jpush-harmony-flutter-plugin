@@ -1,6 +1,6 @@
 {
   "app": {
-    "bundleName": "你的包名",
+    "bundleName": "cn.allpublic.test.hmos",
     "vendor": "example",
     "versionCode": 1000000,
     "versionName": "1.0.0",

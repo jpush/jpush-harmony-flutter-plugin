@@ -65,15 +65,9 @@
         "name": "ohos.permission.INTERNET"
       },
     ],
-    "metadata": [
-      {
-        "name": "client_id",
-        "value": "你的华为应用client_id"
-      }
-    ],
     "proxyData": [
       {
-        "uri": "datashareproxy://你的包名/PushMessage",
+        "uri": "datashareproxy://cn.allpublic.test.hmos/PushMessage",
         "requiredWritePermission": "ohos.permission.WRITE_PRIVACY_PUSH_DATA",
         "metadata": {
           "name": "dataProperties",
