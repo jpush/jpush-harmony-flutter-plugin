@@ -7,14 +7,11 @@
 - 在工程 pubspec.yaml 中加入 dependencies
 
 ```
-  
 //github  集成
+//先下载到本地：你的地址/jpush-harmony-flutter-plugin
 dependencies:
   jpush_harmony_sdk:
-    git:
-      url: git://github.com/jpush/jpush-harmony-flutter-plugin.git
-      ref: main
-      
+     path: 你的地址/jpush-harmony-flutter-plugin
 ```
 
 - 代码导入：可以参考example里的代码
