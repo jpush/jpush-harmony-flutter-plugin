@@ -8,10 +8,10 @@
 
 ```
 //github  集成 
-//先下载本插件工程到本地，如：你的地址/jpush-harmony-flutter-plugin
 dependencies:
   jpush_harmony_sdk:
-     path: 你的地址/jpush-harmony-flutter-plugin
+    git:
+      url: "https://github.com/jpush/jpush-harmony-flutter-plugin.git"
 ```
 
 - 代码导入：可以参考example里的代码
